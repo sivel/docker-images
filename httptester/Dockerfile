@@ -22,6 +22,6 @@ RUN apk add -U openssl py-pip && \
 ADD services.sh /services.sh
 ADD nginx.sites.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80 443 4443
+EXPOSE 80 443
 
 CMD ["/services.sh"]
