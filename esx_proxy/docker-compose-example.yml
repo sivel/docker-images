@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  caddy:
+    build:
+      context: .
+      args:
+        plugins: tls.dns.route53
+    image: abiosoft/caddy
+    ports:
+      - 443:443
+    restart: always
+    volumes:
+      - esx_proxy_caddy:/root/.caddy
+    environment:
+      - CADDY_ESX_UA=VMware-client/6.5.0
+      - AWS_ACCESS_KEY_ID=AWS_ACCESS_KEY_ID_HERE
+      - AWS_SECRET_ACCESS_KEY=AWS_SECRET_ACCESS_KEY_HERE
+      - CADDY_HOST=esxproxy.example.com
+      - CADDY_ESX_HOST=esx.example.com
+      - CADDY_TLS_EMAIL=email@example.com
+      - CADDY_TLS_DNS_PROVIDER=route53
+
+volumes:
+  esx_proxy_caddy:

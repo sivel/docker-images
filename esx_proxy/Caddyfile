@@ -1,0 +1,11 @@
+{$CADDY_HOST}
+proxy / https://{$CADDY_ESX_HOST}/ {
+    header_upstream User-Agent {$CADDY_ESX_UA}
+    header_upstream Host {$CADDY_ESX_HOST}
+    insecure_skip_verify
+}
+tls {$CADDY_TLS_EMAIL} {
+    dns route53
+    max_certs 1
+}
+log stdout
