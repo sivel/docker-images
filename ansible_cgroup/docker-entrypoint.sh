@@ -7,7 +7,7 @@ if [ "$?" != "0" ]; then
 fi
 
 if [ -e /ansible/hacking/env-setup ]; then
-    source /ansible/hacking/env-setup
+    source /ansible/hacking/env-setup -q
 else
     echo "WARNING: /ansible missing, did you forget to mount it?"
 fi

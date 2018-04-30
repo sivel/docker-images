@@ -9,6 +9,7 @@ RUN set -x && \
     apt-get install -y --no-install-recommends cgroup-tools python-pip python-setuptools git sudo curl && \
     \
     pip install -U pip && \
+    hash -r pip && \
     pip install jinja2 PyYAML paramiko cryptography setuptools && \
     \
     useradd -m -s /bin/bash ansible && \
