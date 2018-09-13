@@ -26,7 +26,7 @@ query {
 
 QUERY = '''
 query {
-  repository(owner:"ansible", name:"ansible") {
+  repository(owner: "ansible", name: "ansible") {
 %s
 %s
   }
@@ -34,7 +34,7 @@ query {
 '''
 
 COMMON = '''
-        assignees(first:100) {
+        assignees(first: 100) {
           nodes {
             login
             name
@@ -43,7 +43,7 @@ COMMON = '''
         author {
           login
         }
-        comments(last:100) {
+        comments(last: 100) {
           nodes {
             author {
               login
@@ -60,7 +60,7 @@ COMMON = '''
             publishedAt
           }
         }
-        labels(first:100) {
+        labels(first: 100) {
             nodes {
                 name
             }
@@ -77,7 +77,7 @@ COMMON = '''
             }
           }
         }
-        reactions(first:100) {
+        reactions(first: 100) {
           nodes {
             content
             user {
@@ -111,7 +111,7 @@ COMMON = '''
 '''
 
 ISSUES = '''
-    issues(first:25, states:%(states)s%(cursor)s) {
+    issues(first: 25, states: %(states)s%(cursor)s) {
       nodes {
 %(common)s
       }
@@ -124,7 +124,7 @@ ISSUES = '''
 '''
 
 PULL_REQUESTS = '''
-    pullRequests(first:25, states:%(states)s%(cursor)s) {
+    pullRequests(first: 25, states: %(states)s%(cursor)s) {
       nodes {
 %(common)s
         additions
@@ -141,7 +141,7 @@ PULL_REQUESTS = '''
         mergeable
         merged
         mergedAt
-        commits(first:100) {
+        commits(first: 100) {
           nodes {
             commit {
               author {
@@ -171,7 +171,7 @@ PULL_REQUESTS = '''
             }
           }
         }
-        reviewRequests(first:100) {
+        reviewRequests(first: 100) {
           nodes {
             requestedReviewer {
               __typename
@@ -182,7 +182,7 @@ PULL_REQUESTS = '''
             }
           }
         }
-        reviews(first:100) {
+        reviews(first: 100) {
           nodes {
             author {
               login
@@ -301,6 +301,7 @@ else:
         'pull_requests': '[OPEN]',
     }
 
+
 while fetch:
     print('Loop: %d' % loop)
     filters = ['', '']
@@ -309,7 +310,7 @@ while fetch:
             filters[0] = (
                 PULL_REQUESTS % dict(
                     states=states['pull_requests'],
-                    cursor=', after:"%s"' % (
+                    cursor=', after: "%s"' % (
                         pull_requests['pageInfo']['endCursor']
                     ),
                     common=COMMON
@@ -327,7 +328,7 @@ while fetch:
             filters[1] = (
                 ISSUES % dict(
                     states=states['issues'],
-                    cursor=', after:"%s"' % issues['pageInfo']['endCursor'],
+                    cursor=', after: "%s"' % issues['pageInfo']['endCursor'],
                     common=COMMON
                 )
             )

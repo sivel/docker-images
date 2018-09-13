@@ -5,7 +5,7 @@ import json
 import sys
 
 from elasticsearch import Elasticsearch, RequestsHttpConnection
-from elasticsearch.helpers import streaming_bulk, _chunk_actions
+from elasticsearch.helpers import bulk
 
 
 parser = argparse.ArgumentParser()
@@ -47,16 +47,28 @@ if args.mapping:
             index=args.index
         )
 
+
+def chunker(items, length=250):
+    i = 0
+    while i * length < len(items):
+        yield items[length * i:length * (i + 1)]
+        i += 1
+
+
 def actions(items):
-    for item in items:
-        yield {
+    for chunk in chunker(items):
+        yield [{
             '_op_type': 'update',
             '_index': args.index,
             '_type': args.type,
             '_id': item['number'],
             'doc': item,
             'doc_as_upsert': True,
-        }
+        } for item in chunk]
 
-for msg in streaming_bulk(es, actions(items)):
-    print(msg)
+
+for chunk in actions(items):
+    try:
+        print(bulk(es, chunk))
+    except:
+        print(bulk(es, chunk))

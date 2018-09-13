@@ -1,2 +1,2 @@
 0 3-23 * * * cd /usr/src/app && /bin/sh run.sh >> app.log 2>&1
-0 0 * * * cd /usr/src/app && /bin/sh run.sh --all >> app.log 2>&1
+0 0 * * * cd /usr/src/app && /bin/sh all.sh >> app.log 2>&1

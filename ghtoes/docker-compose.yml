@@ -10,7 +10,8 @@ services:
       - elasticsearch:/usr/share/elasticsearch/data
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:6.2.1
+    #image: docker.elastic.co/kibana/kibana:6.2.1
+    build: ./kibana
     ports:
       - "5601:5601"
     restart: always
@@ -20,6 +21,8 @@ services:
           ipv4_address: 99.40.229.34
     cap_add:
       - NET_ADMIN
+    environment:
+      - DEFAULT_GW=99.40.229.38
 
   ghtoes:
     build: ./ghtoes
